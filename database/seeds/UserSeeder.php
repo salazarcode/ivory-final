@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'email' => 'administrador@gmail.com',
             'password' => bcrypt('12345'),
             'email_verified' => true,
-            'email_code' => null
+            'email_code' => str_random(32)
         ]);
         $user->assign('administrador');
 
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'email' => 'ejecutivo@gmail.com',
             'password' => bcrypt('12345'),
             'email_verified' => true,
-            'email_code' => null
+            'email_code' => str_random(32)
         ]);
         $user->assign('ejecutivo');
 
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             'email' => 'delegado@gmail.com',
             'password' => bcrypt('12345'),
             'email_verified' => true,
-            'email_code' => null
+            'email_code' => str_random(32)
         ]);
         $user->assign('delegado');
     }
