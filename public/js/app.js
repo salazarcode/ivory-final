@@ -24850,9 +24850,8 @@ module.exports = __webpack_require__(45);
 
 /***/ }),
 /* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -24870,7 +24869,7 @@ window.Vue = __webpack_require__(11);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(39));
+Vue.component('users-component', __webpack_require__(39));
 
 var app = new Vue({
   el: '#app',
@@ -47206,7 +47205,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\ExampleComponent.vue"
+Component.options.__file = "resources\\assets\\js\\components\\administrador\\UsersComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -47215,9 +47214,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0ca92eac", Component.options)
+    hotAPI.createRecord("data-v-7dc9446a", Component.options)
   } else {
-    hotAPI.reload("data-v-0ca92eac", Component.options)
+    hotAPI.reload("data-v-7dc9446a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47358,16 +47357,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            count: this.$store.state.count
+            edit: false,
+            users: [],
+            editable: ''
+
         };
     },
     mounted: function mounted() {
-        console.log('Component mounted.');
+        this.listar();
+    },
+
+    methods: {
+        listar: function listar() {
+            var _this = this;
+
+            axios.get('/users').then(function (res) {
+                _this.users = res.data;
+            });
+        },
+        editar: function editar(idx) {
+            this.editable = this.users[idx];
+            this.edit = true;
+        },
+        guardar: function guardar(editable) {
+            var _this2 = this;
+
+            axios.post('/users/' + editable.id, {
+                name: editable.name,
+                email: editable.email
+            }).then(function (response) {
+                _this2.listar();
+                _this2.edit = false;
+            });
+        }
     }
+
 });
 
 /***/ }),
@@ -47378,33 +47421,129 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card card-default" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Example Component")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v(
-              "\n                    I'm an example component. -" +
-                _vm._s(_vm.count) +
-                "-\n                "
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [_vm._v("Users")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      !_vm.edit
+        ? _c("div", { staticClass: "list" }, [
+            _c(
+              "table",
+              { staticClass: "table table-bordered table-dark" },
+              _vm._l(_vm.users, function(user, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", [_vm._v(_vm._s(user.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.email))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.editar(index)
+                          }
+                        }
+                      },
+                      [_vm._v("Editar")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0, true)
+                ])
+              })
             )
           ])
-        ])
-      ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.edit
+        ? _c("div", { staticClass: "edit" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "usr_name" } }, [_vm._v("Name:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.editable.name,
+                    expression: "editable.name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "usr_name" },
+                domProps: { value: _vm.editable.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.editable, "name", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "usr_email" } }, [_vm._v("Email:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.editable.email,
+                    expression: "editable.email"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "usr_email" },
+                domProps: { value: _vm.editable.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.editable, "email", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    _vm.guardar(_vm.editable)
+                  }
+                }
+              },
+              [_vm._v("Guardar")]
+            )
+          ])
+        : _vm._e()
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("a", { attrs: { href: "#" } }, [_vm._v("Eliminar")])])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0ca92eac", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7dc9446a", module.exports)
   }
 }
 

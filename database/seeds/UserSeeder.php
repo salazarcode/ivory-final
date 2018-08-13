@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use \Bouncer as Bouncer;
+use App\Delegado;
 
 class UserSeeder extends Seeder
 {
@@ -28,31 +29,35 @@ class UserSeeder extends Seeder
         ]);
 
 
-        $user = User::create([
+        $user1 = User::create([
             'name' => 'Señor Administrador',
             'email' => 'administrador@gmail.com',
             'password' => bcrypt('12345'),
             'email_verified' => true,
             'email_code' => str_random(32)
         ]);
-        $user->assign('administrador');
+        $user1->assign('administrador');
 
-        $user = User::create([
+        $user2 = User::create([
             'name' => 'Señor Ejecutivo',
             'email' => 'ejecutivo@gmail.com',
             'password' => bcrypt('12345'),
             'email_verified' => true,
             'email_code' => str_random(32)
         ]);
-        $user->assign('ejecutivo');
+        $user2->assign('ejecutivo');
 
-        $user = User::create([
+        $user3 = User::create([
             'name' => 'Señor Delegado',
             'email' => 'delegado@gmail.com',
             'password' => bcrypt('12345'),
             'email_verified' => true,
             'email_code' => str_random(32)
         ]);
-        $user->assign('delegado');
+        $user3->assign('delegado');
+        Delegado::create([
+            'ejecutivo_id'=> $user2->id,
+            'delegado_id' => $user3->id
+        ]);
     }
 }
