@@ -6,7 +6,7 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        I'm an example component. -{{count}}-
                     </div>
                 </div>
             </div>
@@ -16,8 +16,13 @@
 
 <script>
     export default {
+        data: function(){
+            return{
+                count : this.$store.state.count
+            }
+        },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');      
         }
     }
 </script>
