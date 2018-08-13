@@ -23,6 +23,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(Auth::user()->isAn("administrator"))
+        {
+            return view("administrador.home");
+        }
+        if(Auth::user()->isAn("ejecutivo"))
+        {
+            return view("ejecutivo.home");
+        }
+        if(Auth::user()->isAn("delegado"))
+        {
+            return view("delegado.home");
+        }
+
     }
 }
