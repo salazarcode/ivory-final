@@ -47372,14 +47372,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             edit: false,
             users: [],
-            editable: ''
-
+            editable: '',
+            creando: false
         };
     },
     mounted: function mounted() {
@@ -47401,13 +47402,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         guardar: function guardar(editable) {
             var _this2 = this;
 
-            axios.post('/users/' + editable.id, {
-                name: editable.name,
-                email: editable.email
-            }).then(function (response) {
-                _this2.listar();
-                _this2.edit = false;
+            if (this.creando) {
+                axios.post('/users', {
+                    name: editable.name,
+                    email: editable.email
+                }).then(function (response) {
+                    _this2.listar();
+                    _this2.edit = false;
+                    _this2.creando = false;
+                });
+            } else {
+                axios.post('/users/' + editable.id, {
+                    name: editable.name,
+                    email: editable.email
+                }).then(function (response) {
+                    _this2.listar();
+                    _this2.edit = false;
+                });
+            }
+        },
+        eliminar: function eliminar(id) {
+            var _this3 = this;
+
+            axios.get('/users/destroy/' + id).then(function (res) {
+                _this3.listar();
             });
+        },
+        crear: function crear() {
+            this.creando = true;
+            this.edit = true;
+            this.editable = { name: '', email: '' };
         }
     }
 
@@ -47452,9 +47476,29 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(0, true)
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.eliminar(user.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Eliminar")]
+                    )
+                  ])
                 ])
               })
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-success", on: { click: _vm.crear } },
+              [_vm._v("Crear")]
             )
           ])
         : _vm._e(),
@@ -47530,14 +47574,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("a", { attrs: { href: "#" } }, [_vm._v("Eliminar")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

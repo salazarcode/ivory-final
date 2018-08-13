@@ -32,8 +32,9 @@ class UsersController extends Controller
             $user = User::create([
                 'name' => $rq->name,
                 'email' => $rq->email,
-                'email_verified' => $default_email_verified,
-                'email_code' => str_random(32)
+                'email_verified' => $this->default_email_verified,
+                'email_code' => str_random(32),
+                'password' => bcrypt('12345'),
             ]);
             $user->assign("ejecutivo");
             return $user;
@@ -43,8 +44,9 @@ class UsersController extends Controller
             $user = User::create([
                 'name' => $rq->name,
                 'email' => $rq->email,
-                'email_verified' => $default_email_verified,
-                'email_code' => str_random(32)
+                'email_verified' => $this->default_email_verified,
+                'email_code' => str_random(32),
+                'password' => bcrypt('12345'),
             ]);
             $user->assign("delegado");
 
@@ -80,7 +82,7 @@ class UsersController extends Controller
 
         if($target->isAn("delegado") && $destroyer->isAn("ejecutivo"))
         {
-            $delegados = Delegados::where([
+            $delegados = Delegado::where([
                 'ejecutivo_id' => $destroyer->id,
                 'delegado_id' => $target->id,
             ])->get();

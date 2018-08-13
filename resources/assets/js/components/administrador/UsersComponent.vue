@@ -9,9 +9,10 @@
                         <td>{{user.name}}</td>
                         <td>{{user.email}}</td>
                         <td><a href="#" @click.prevent="editar(index)">Editar</a></td>
-                        <td><a href="#">Eliminar</a></td>
+                        <td><a href="#" @click.prevent="eliminar(user.id)">Eliminar</a></td>
                     </tr>
                 </table>
+                <button class="btn btn-success" @click="crear">Crear</button>
             </div>
             
             <div class="edit" v-if="edit">
@@ -35,8 +36,8 @@
             return{
                 edit: false,
                 users: [],
-                editable:''
-
+                editable:'',
+                creando: false
             }
         },
         mounted() {                 
@@ -54,14 +55,37 @@
                 this.edit = true;
             },
             guardar: function(editable){
-                axios.post('/users/' + editable.id, {
-                    name: editable.name,
-                    email: editable.email
-                })
-                .then((response)=> {
+                if(this.creando){                    
+                    axios.post('/users', {
+                        name: editable.name,
+                        email: editable.email
+                    })
+                    .then((response)=> {
+                        this.listar();
+                        this.edit = false;
+                        this.creando = false;
+                    });
+                }else{
+                    axios.post('/users/' + editable.id, {
+                        name: editable.name,
+                        email: editable.email
+                    })
+                    .then((response)=> {
+                        this.listar();
+                        this.edit = false;
+                    });
+                }
+            },
+            eliminar: function(id){
+                axios.get('/users/destroy/'+ id)
+                .then((res) => {
                     this.listar();
-                    this.edit = false;
-                });
+                })
+            },
+            crear: function(){
+                this.creando = true;
+                this.edit = true;  
+                this.editable = {name:'', email:''};              
             }
         }
 
