@@ -24,3 +24,15 @@ Route::get('/users/{id?}', 'UsersController@retrieve');
 Route::post('/users', 'UsersController@create');
 Route::post('/users/{id}', 'UsersController@update');
 Route::get('/users/destroy/{id}', 'UsersController@delete');
+
+//ServiciosTipos
+Route::get('/servicios-tipos/{id?}', 'ServiciosTiposController@retrieve');
+Route::post('/servicios-tipos', 'ServiciosTiposController@create');
+Route::post('/servicios-tipos/{id}', 'ServiciosTiposController@update');
+Route::get('/servicios-tipos/destroy/{id}', 'ServiciosTiposController@delete');
+
+//CredencialesTipos
+Route::get('/credenciales-tipos/{id?}', 'CredencialesTiposController@retrieve');
+Route::post('/credenciales-tipos', 'CredencialesTiposController@create');
+Route::post('/credenciales-tipos/{id}', 'CredencialesTiposController@update');
+Route::get('/credenciales-tipos/destroy/{id}', 'CredencialesTiposController@delete');

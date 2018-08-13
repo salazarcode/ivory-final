@@ -17,6 +17,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('users-component', require('./components/administrador/UsersComponent.vue'));
+Vue.component('servicios-tipos', require('./components/administrador/ServiciosTiposComponent.vue'));
+Vue.component('credenciales-tipos', require('./components/administrador/CredencialesTiposComponent.vue'));
 
 const app = new Vue({
     el: '#app',

@@ -14,11 +14,21 @@
                         </div>
                     @endif
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <users-component></users-component>
                         </div>
-                        <div class="col-md-4">
-                            
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <servicios-tipos></servicios-tipos>
+                                </div>
+                            </div> 
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <credenciales-tipos></credenciales-tipos>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
