@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use DB;
 use App\User;
-use Bouncer;
+use \Bouncer as Bouncer;
 
 class UserSeeder extends Seeder
 {
@@ -24,8 +23,8 @@ class UserSeeder extends Seeder
             'title' => 'Administrator',
         ]);
         $delegadoRole = Bouncer::role()->firstOrCreate([
-            'name' => 'admin',
-            'title' => 'Administrator',
+            'name' => 'dejegado',
+            'title' => 'Delegado',
         ]);
 
 
@@ -36,6 +35,8 @@ class UserSeeder extends Seeder
             'email_verified' => true,
             'email_code' => null
         ]);
+        $user->assign('administrador');
+
         $user = User::create([
             'name' => 'Señor Ejecutivo',
             'email' => 'ejecutivo@gmail.com',
@@ -43,6 +44,8 @@ class UserSeeder extends Seeder
             'email_verified' => true,
             'email_code' => null
         ]);
+        $user->assign('ejecutivo');
+
         $user = User::create([
             'name' => 'Señor Delegado',
             'email' => 'delegado@gmail.com',
@@ -50,5 +53,6 @@ class UserSeeder extends Seeder
             'email_verified' => true,
             'email_code' => null
         ]);
+        $user->assign('delegado');
     }
 }

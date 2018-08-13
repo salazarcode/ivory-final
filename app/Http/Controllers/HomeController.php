@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Bouncer;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,18 +25,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isAn("administrator"))
+        $user = Auth::user();
+        if($user->isAn("administrador"))
         {
             return view("administrador.home");
         }
-        if(Auth::user()->isAn("ejecutivo"))
+        if($user->isAn("ejecutivo"))
         {
             return view("ejecutivo.home");
         }
-        if(Auth::user()->isAn("delegado"))
+        if($user->isAn("delegado"))
         {
             return view("delegado.home");
         }
-
     }
 }
