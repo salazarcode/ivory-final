@@ -26,7 +26,7 @@
                 </div>
                 <button class="btn btn-primary" @click="guardar(editable)">Guardar</button>
             </div>
-        </div>
+        </div
     </div>
 </template>
 
