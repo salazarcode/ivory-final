@@ -36,3 +36,10 @@ Route::get('/credenciales-tipos/{id?}', 'CredencialesTiposController@retrieve');
 Route::post('/credenciales-tipos', 'CredencialesTiposController@create');
 Route::post('/credenciales-tipos/{id}', 'CredencialesTiposController@update');
 Route::get('/credenciales-tipos/destroy/{id}', 'CredencialesTiposController@delete');
+
+//Marcas
+Route::get('/marcas/{id?}', 'MarcasController@retrieve');
+Route::post('/marcas', 'MarcasController@create');
+Route::post('/marcas/{id}', 'MarcasController@update');
+Route::get('/marcas/destroy/{id}', 'MarcasController@delete');
+
