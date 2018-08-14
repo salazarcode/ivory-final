@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Marcas;
+use App\Marca;
+use Auth;
 
 class MarcasController extends Controller
 {
@@ -32,7 +33,8 @@ class MarcasController extends Controller
 
     public function update(Request $rq, $id)
     {
-        if(Marca::find($id)->user->id == Auth::user()->id)
+        $marca = Marca::find($id);
+        if($marca->user->id == Auth::user()->id)
         {            
             $marca->titulo = $rq->titulo;
             $marca->save();

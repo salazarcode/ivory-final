@@ -14,11 +14,10 @@
                         </div>
                     @endif
                     <div class="row">
-                        <div class="col-md-8">
-                            <users-component></users-component>
+                        <div class="col-md-3">
+                            <marcas-wrapper></marcas-wrapper>   
                         </div>
-                        <div class="col-md-4">
-                            
+                        <div class="col-md-9">                         
                         </div>
                     </div>
                 </div>

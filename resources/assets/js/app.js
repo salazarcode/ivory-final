@@ -19,6 +19,8 @@ window.Vue = require('vue');
 Vue.component('users-component', require('./components/administrador/UsersComponent.vue'));
 Vue.component('servicios-tipos', require('./components/administrador/ServiciosTiposComponent.vue'));
 Vue.component('credenciales-tipos', require('./components/administrador/CredencialesTiposComponent.vue'));
+Vue.component('marcas-wrapper', require('./components/ejecutivo/MarcasWrapperComponent.vue'));
+Vue.component('marcas-single', require('./components/ejecutivo/MarcasSingleComponent.vue'));
 
 const app = new Vue({
     el: '#app',
