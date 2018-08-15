@@ -3,10 +3,14 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const state = {
-  count: 88
-}
 
 export default new Vuex.Store({
-  state
+    state: {
+      marcaSeleccionada : null
+    },
+    mutations: {
+      setMarcaSeleccionada (state, payload) {
+        state.marcaSeleccionada = payload.marca;
+      }
+    }
 })

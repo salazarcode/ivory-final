@@ -18,7 +18,7 @@
                             <marcas-wrapper></marcas-wrapper>
                         </div>
                         <div class="col-md-9">      
-                            <example-compo></example-compo>
+                            <marcas-resume></marcas-resume>
                         </div>
                     </div>
                 </div>

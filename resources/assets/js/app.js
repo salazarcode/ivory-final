@@ -18,7 +18,7 @@ window.Vue = require('vue');
 
 
 import MarcasWrapper from './components/ejecutivo/MarcasWrapperComponent';
-import ExampleCompo from './components/ejecutivo/ExampleCompo';
+import MarcasResume from './components/ejecutivo/MarcasResumeCompo';
 import UsersComponent from './components/administrador/UsersComponent';
 import ServiciosTiposComponent from './components/administrador/ServiciosTiposComponent';
 import CredencialesTiposComponent from './components/administrador/CredencialesTiposComponent';
@@ -28,7 +28,7 @@ const app = new Vue({
     store : require('./store').default,
     components: {
         MarcasWrapper,
-        ExampleCompo,
+        MarcasResume,
         UsersComponent,
         ServiciosTiposComponent,
         CredencialesTiposComponent        

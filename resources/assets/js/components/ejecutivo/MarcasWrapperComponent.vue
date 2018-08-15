@@ -1,6 +1,12 @@
 <template>
     <div class="card">
-        <marcas-single v-for="(elem, index) in listables" :key="index" :marca="elem"></marcas-single>
+        <marcas-single 
+            v-for="(elem, index) in listables" 
+            :key="index" 
+            :marca="elem"
+            v-on:delete="onDeleteMarca"
+        >
+        </marcas-single>
     </div>
 </template>
 
@@ -28,6 +34,12 @@
                 .then((res) => {
                     this.listables = res.data;
                 })
+            },
+            onDeleteMarca: function(id){
+                let index = this.listables.find((elem) => {
+                    return elem.id == id
+                });
+                this.listables.splice(index, 1);
             }
         }
     }

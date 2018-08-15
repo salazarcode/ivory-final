@@ -7,6 +7,7 @@
             </div>
             <div class="card-footer">
                 <a href="#" @click.prevent="editar">Editar</a>
+                <a href="#" @click.prevent="configurar">Configurar</a>
                 <a href="#" @click.prevent="eliminar(marca.id)">Eliminar</a>
             </div>
         </div>
@@ -65,7 +66,7 @@
             eliminar: function(id){
                 axios.get(this.rutas.eliminar + id)
                 .then((res) => {
-                    this.$destroy()
+                    this.$emit('delete', id);
                 })
             },
             crear: function(){
@@ -77,7 +78,12 @@
                 this.editable = {titulo:''}; 
                 this.creando = false;
                 this.edit = false;    
-            }        
+            },
+            configurar: function(){
+                this.$store.commit('setMarcaSeleccionada', {
+                    marca: this.marca
+                })
+            }
         }
     }
 </script>

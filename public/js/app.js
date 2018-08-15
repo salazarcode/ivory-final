@@ -24965,8 +24965,8 @@ module.exports = __webpack_require__(60);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_ejecutivo_MarcasWrapperComponent__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_ejecutivo_MarcasWrapperComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_ejecutivo_MarcasWrapperComponent__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_ejecutivo_ExampleCompo__ = __webpack_require__(74);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_ejecutivo_ExampleCompo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_ejecutivo_ExampleCompo__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_ejecutivo_MarcasResumeCompo__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_ejecutivo_MarcasResumeCompo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_ejecutivo_MarcasResumeCompo__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_administrador_UsersComponent__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_administrador_UsersComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_administrador_UsersComponent__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_administrador_ServiciosTiposComponent__ = __webpack_require__(43);
@@ -25001,7 +25001,7 @@ var app = new Vue({
   store: __webpack_require__(58).default,
   components: {
     MarcasWrapper: __WEBPACK_IMPORTED_MODULE_0__components_ejecutivo_MarcasWrapperComponent___default.a,
-    ExampleCompo: __WEBPACK_IMPORTED_MODULE_1__components_ejecutivo_ExampleCompo___default.a,
+    MarcasResume: __WEBPACK_IMPORTED_MODULE_1__components_ejecutivo_MarcasResumeCompo___default.a,
     UsersComponent: __WEBPACK_IMPORTED_MODULE_2__components_administrador_UsersComponent___default.a,
     ServiciosTiposComponent: __WEBPACK_IMPORTED_MODULE_3__components_administrador_ServiciosTiposComponent___default.a,
     CredencialesTiposComponent: __WEBPACK_IMPORTED_MODULE_4__components_administrador_CredencialesTiposComponent___default.a
@@ -48199,6 +48199,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48225,6 +48231,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(this.rutas.listar).then(function (res) {
                 _this.listables = res.data;
             });
+        },
+        onDeleteMarca: function onDeleteMarca(id) {
+            var index = this.listables.find(function (elem) {
+                return elem.id == id;
+            });
+            this.listables.splice(index, 1);
         }
     }
 });
@@ -48241,7 +48253,11 @@ var render = function() {
     "div",
     { staticClass: "card" },
     _vm._l(_vm.listables, function(elem, index) {
-      return _c("marcas-single", { key: index, attrs: { marca: elem } })
+      return _c("marcas-single", {
+        key: index,
+        attrs: { marca: elem },
+        on: { delete: _vm.onDeleteMarca }
+      })
     })
   )
 }
@@ -48334,6 +48350,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "marcas-single",
@@ -48378,7 +48395,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             axios.get(this.rutas.eliminar + id).then(function (res) {
-                _this2.$destroy();
+                _this2.$emit('delete', id);
             });
         },
         crear: function crear() {
@@ -48390,6 +48407,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.editable = { titulo: '' };
             this.creando = false;
             this.edit = false;
+        },
+        configurar: function configurar() {
+            this.$store.commit('setMarcaSeleccionada', {
+                marca: this.marca
+            });
         }
     }
 });
@@ -48423,6 +48445,20 @@ var render = function() {
                   }
                 },
                 [_vm._v("Editar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.configurar($event)
+                    }
+                  }
+                },
+                [_vm._v("Configurar")]
               ),
               _vm._v(" "),
               _c(
@@ -48517,12 +48553,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
-var state = {
-  count: 88
-};
-
 /* harmony default export */ __webpack_exports__["default"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-  state: state
+  state: {
+    marcaSeleccionada: null
+  },
+  mutations: {
+    setMarcaSeleccionada: function setMarcaSeleccionada(state, payload) {
+      state.marcaSeleccionada = payload.marca;
+    }
+  }
 }));
 
 /***/ }),
@@ -49490,15 +49529,18 @@ var index_esm = {
 /* 71 */,
 /* 72 */,
 /* 73 */,
-/* 74 */
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(75)
+var __vue_script__ = __webpack_require__(78)
 /* template */
-var __vue_template__ = __webpack_require__(76)
+var __vue_template__ = __webpack_require__(79)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -49515,7 +49557,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\ejecutivo\\ExampleCompo.vue"
+Component.options.__file = "resources\\assets\\js\\components\\ejecutivo\\MarcasResumeCompo.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -49524,9 +49566,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5b3d5dc9", Component.options)
+    hotAPI.createRecord("data-v-182a4fce", Component.options)
   } else {
-    hotAPI.reload("data-v-5b3d5dc9", Component.options)
+    hotAPI.reload("data-v-182a4fce", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -49537,7 +49579,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 75 */
+/* 78 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49548,23 +49590,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "example-compo",
+    name: "marcas-resume",
     data: function data() {
         return {};
+    },
+    computed: {
+        marca: function marca() {
+            return this.$store.state.marcaSeleccionada;
+        }
     }
 });
 
 /***/ }),
-/* 76 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Hola mundo!\n")])
+  return _c("div", [
+    _c("div", { staticClass: "card" }, [
+      _vm.marca != null
+        ? _c("div", [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v(
+                "                 \n                " +
+                  _vm._s(_vm.marca.titulo) +
+                  "\n            "
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _vm.marca == null
+            ? [_c("h1", [_vm._v("Debes seleccionar una marca a la izquerda")])]
+            : [
+                _vm._v(
+                  "                    \n                " +
+                    _vm._s(_vm.marca.titulo) +
+                    "\n            "
+                )
+              ]
+        ],
+        2
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49572,7 +49665,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5b3d5dc9", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-182a4fce", module.exports)
   }
 }
 
