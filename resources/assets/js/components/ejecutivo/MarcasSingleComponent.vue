@@ -26,6 +26,7 @@
 
 <script>
     export default {
+        name: "marcas-single",
         props: {
             marca: {
                 type: Object

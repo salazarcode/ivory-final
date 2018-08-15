@@ -27,6 +27,7 @@
 
 <script>
     export default {
+        name: "servicios-tipos",
         data: function(){
             return{
                 edit: false,

@@ -5,7 +5,12 @@
 </template>
 
 <script>
+    import MarcasSingle from './MarcasSingleComponent';
     export default {
+        name: "marcas-wrapper",
+        components: {
+            'marcas-single': MarcasSingle
+        },
         data: function(){
             return{
                 listables: [],

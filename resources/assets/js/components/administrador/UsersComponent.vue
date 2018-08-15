@@ -32,6 +32,7 @@
 
 <script>
     export default {
+        name: "user-component",
         data: function(){
             return{
                 edit: false,

@@ -27,6 +27,7 @@
 
 <script>
     export default {
+        name: "credenciales-tipos",
         data: function(){
             return{
                 edit: false,
