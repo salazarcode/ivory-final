@@ -5,23 +5,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import './bootstrap';
 
 window.Vue = require('vue');
 
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-
 import MarcasWrapper from './components/ejecutivo/MarcasWrapperComponent';
-import MarcasResume from './components/ejecutivo/MarcasResumeCompo';
+import MarcasResume from './components/ejecutivo/MarcasResumeComponent';
 import UsersComponent from './components/administrador/UsersComponent';
-import ServiciosTiposComponent from './components/administrador/ServiciosTiposComponent';
-import CredencialesTiposComponent from './components/administrador/CredencialesTiposComponent';
+import ServiciosTipos from './components/administrador/ServiciosTiposComponent';
+import CredencialesTipos from './components/administrador/CredencialesTiposComponent';
 
 const app = new Vue({
     el: '#app',
@@ -30,7 +22,7 @@ const app = new Vue({
         MarcasWrapper,
         MarcasResume,
         UsersComponent,
-        ServiciosTiposComponent,
-        CredencialesTiposComponent        
+        ServiciosTipos,
+        CredencialesTipos        
     }
 });

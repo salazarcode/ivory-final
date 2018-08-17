@@ -1,19 +1,27 @@
 <template>
     <div class="card">
-        <marcas-single 
-            v-for="(elem, index) in listables" 
-            :key="index" 
-            :marca="elem"
-            v-on:delete="onDeleteMarca"
-        >
-        </marcas-single>
+        <button class="btn btn-primary" @click="crearMarca">Crear Marca</button><br>
+        <div ref="marcasContainer">
+            <marcas-single 
+                v-for="(elem, index) in listables" 
+                :key="index" 
+                :marca="elem"
+                :edit="false"
+                v-on:delete="onDeleteMarca"
+                v-on:actualizar_listables="onActualizarListables"
+            >
+            </marcas-single>
+        </div>
+
+        
     </div>
 </template>
 
 <script>
     import MarcasSingle from './MarcasSingleComponent';
+    import Vue from 'vue';
     export default {
-        name: "marcas-wrapper",
+        name: 'marcas-wrapper',
         components: {
             'marcas-single': MarcasSingle
         },
@@ -21,8 +29,10 @@
             return{
                 listables: [],
                 rutas: {
-                    listar: "/marcas"
-                }
+                    listar: "/marcas",
+                    guardarNuevo: "/marcas",
+                },
+                creandoMarca: false
             }
         },
         mounted() {                 
@@ -35,11 +45,27 @@
                     this.listables = res.data;
                 })
             },
-            onDeleteMarca: function(id){
-                let index = this.listables.find((elem) => {
-                    return elem.id == id
+            onDeleteMarca: function(){
+                this.listar();
+            },
+            onActualizarListables: function(){
+                this.listar();
+            },
+            crearMarca: function(response){
+                axios.post(this.rutas.guardarNuevo, {
+                    titulo: "Título por defecto"
+                })
+                .then((response)=>{
+                    if(response.data.hasOwnProperty("code") && response.data.code == 99)
+                    {
+                        console.log(response.data)
+                    }
+                    else
+                    {
+                        this.listables.push(response.data)
+                    }
                 });
-                this.listables.splice(index, 1);
+
             }
         }
     }

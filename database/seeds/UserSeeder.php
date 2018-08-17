@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 use App\User;
 use \Bouncer as Bouncer;
 use App\Delegado;
+use App\CredencialTipo;
+use App\ServicioTipo;
 
 class UserSeeder extends Seeder
 {
@@ -43,6 +45,7 @@ class UserSeeder extends Seeder
             'email' => 'ejecutivo@gmail.com',
             'password' => bcrypt('12345'),
             'email_verified' => true,
+            'limite' => 3,
             'email_code' => str_random(32)
         ]);
         $user2->assign('ejecutivo');
@@ -59,5 +62,16 @@ class UserSeeder extends Seeder
             'ejecutivo_id'=> $user2->id,
             'delegado_id' => $user3->id
         ]);
+        ServicioTipo::create(['titulo' => "Facebook"]);
+        ServicioTipo::create(['titulo' => "Twitter"]);
+        ServicioTipo::create(['titulo' => "Instagram"]);
+        ServicioTipo::create(['titulo' => "Wordpress"]);
+        ServicioTipo::create(['titulo' => "WooCommerce"]);
+
+        
+        CredencialTipo::create(['titulo' => "client_id"]);
+        CredencialTipo::create(['titulo' => "client_secret"]);
+        CredencialTipo::create(['titulo' => "user"]);
+        CredencialTipo::create(['titulo' => "password"]);
     }
 }

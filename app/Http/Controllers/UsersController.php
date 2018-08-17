@@ -46,6 +46,7 @@ class UsersController extends Controller
                 'email' => $rq->email,
                 'email_verified' => $this->default_email_verified,
                 'email_code' => str_random(32),
+                'limite' => $rq->limite,
                 'password' => bcrypt('12345'),
             ]);
             $user->assign("delegado");
@@ -66,6 +67,8 @@ class UsersController extends Controller
         {
             $user->name = $rq->name;
             $user->email = $rq->email;
+            if($user->isAn("ejecutivo"))
+                $user->limite = $rq->limite;
             $user->save();
             return [$user];
         }

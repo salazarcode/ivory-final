@@ -24,10 +24,22 @@ class MarcasController extends Controller
     {
         if(Auth::user()->isAn('ejecutivo'))
         {
-            $marca = Marca::create([
-                'titulo'=> $rq->titulo,                        
-                'user_id'=> Auth::user()->id
-            ]);
+            if(Auth::user()->marcas->count() < Auth::user()->limite)
+            {
+                $marca = Marca::create([
+                    'titulo'=> $rq->titulo,                        
+                    'user_id'=> Auth::user()->id
+                ]);
+                return $marca;
+            }
+            else
+            {
+                return [
+                    "code" => 99,
+                    "error" => "You have reached the mark's limit for your kind of user",
+                    "count" => Auth::user()->limite
+                ];
+            }
         }
     }
 
@@ -48,5 +60,6 @@ class MarcasController extends Controller
         {
             Marca::destroy($id);
         }
+        return Marca::all();
     }
 }

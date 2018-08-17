@@ -5,25 +5,43 @@
         <div class="card-body">
             <div class="list" v-if="!edit">
                 <table class="table table-bordered table-dark">
-                    <tr v-for="(user, index) in users" :key="index">
-                        <td>{{user.name}}</td>
-                        <td>{{user.email}}</td>
-                        <td><a href="#" @click.prevent="editar(index)">Editar</a></td>
-                        <td><a href="#" @click.prevent="eliminar(user.id)">Eliminar</a></td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Max. Marcas</th>
+                            <th colspan="2">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(user, index) in users" :key="index">
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.limite}}</td>
+                            <td><a href="#" @click.prevent="editar(index)">Editar</a></td>
+                            <td><a href="#" @click.prevent="eliminar(user.id)">Eliminar</a></td>
+                        </tr>
+                    </tbody>
                 </table>
                 <button class="btn btn-success" @click="crear">Crear</button>
             </div>
             
             <div class="edit" v-if="edit">
                 <div class="form-group">
-                <label for="usr_name">Name:</label>
-                <input type="text" class="form-control" id="usr_name" v-model="editable.name">
+                    <label for="usr_name">Name:</label>
+                    <input type="text" class="form-control" id="usr_name" v-model="editable.name">
                 </div>
+
                 <div class="form-group">
-                <label for="usr_email">Email:</label>
-                <input type="text" class="form-control" id="usr_email" v-model="editable.email">
+                    <label for="usr_email">Email:</label>
+                    <input type="text" class="form-control" id="usr_email" v-model="editable.email">
                 </div>
+
+                <div class="form-group">
+                    <label for="usr_limite">Límite:</label>
+                    <input type="number" class="form-control" id="usr_limite" v-model="editable.limite">
+                </div>
+
                 <button class="btn btn-primary" @click="guardar(editable)">Guardar</button>
             </div>
         </div>
@@ -32,7 +50,7 @@
 
 <script>
     export default {
-        name: "user-component",
+        name: "users-component",
         data: function(){
             return{
                 edit: false,
@@ -69,7 +87,8 @@
                 }else{
                     axios.post('/users/' + editable.id, {
                         name: editable.name,
-                        email: editable.email
+                        email: editable.email,
+                        limite: editable.limite
                     })
                     .then((response)=> {
                         this.listar();
