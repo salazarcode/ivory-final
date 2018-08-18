@@ -9,7 +9,7 @@ import './bootstrap';
 
 window.Vue = require('vue');
 
-import MarcasWrapper from './components/ejecutivo/MarcasWrapperComponent';
+import Marcas from './components/ejecutivo/MarcasComponent';
 import MarcasResume from './components/ejecutivo/MarcasResumeComponent';
 import UsersComponent from './components/administrador/UsersComponent';
 import ServiciosTipos from './components/administrador/ServiciosTiposComponent';
@@ -19,10 +19,10 @@ const app = new Vue({
     el: '#app',
     store : require('./store').default,
     components: {
-        MarcasWrapper,
+        Marcas,
         MarcasResume,
         UsersComponent,
         ServiciosTipos,
-        CredencialesTipos        
+        CredencialesTipos
     }
 });

@@ -15,7 +15,7 @@
                     @endif
                     <div class="row">
                         <div class="col-md-4">
-                            <marcas-wrapper></marcas-wrapper>
+                            <marcas></marcas>
                         </div>
                         <div class="col-md-8">      
                             <marcas-resume></marcas-resume>

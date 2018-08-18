@@ -21,7 +21,7 @@
     import MarcasSingle from './MarcasSingleComponent';
     import Vue from 'vue';
     export default {
-        name: 'marcas-wrapper',
+        name: 'marcas',
         components: {
             'marcas-single': MarcasSingle
         },
