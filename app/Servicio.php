@@ -16,5 +16,9 @@ class Servicio extends Model
     public function credenciales()
     {
         return $this->hasMany('App\Crendencial');
-    }    
+    }        
+    public function tipo()
+    {
+        return $this->hasOne('App\CrendencialTipo');
+    } 
 }

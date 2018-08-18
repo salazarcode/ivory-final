@@ -47923,6 +47923,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -47936,38 +47966,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             rutas: {
-                listar: "/servicios"
+                listar: "/servicios/",
+                guardarNuevo: "/servicios",
+                eliminar: "/servicios/destroy/"
             },
             servicios: '',
             tiposServicios: '',
-            tiposCredenciales: ''
+            tiposCredenciales: '',
+            creating: false,
+            servicioSeleccionado: ''
         };
     },
     methods: {
         listar: function listar() {
             var _this = this;
 
-            axios.get(this.rutas.listar).then(function (res) {
-                _this.elementos = res.data;
+            axios.get(this.rutas.listar + this.marca.id).then(function (res) {
+                _this.servicios = res.data;
             });
         },
         agregarServicio: function agregarServicio() {
-            return 0;
+            this.creating = true;
+        },
+        cancelarCreacion: function cancelarCreacion() {
+            this.servicioSeleccionado = '';
+            this.creating = false;
+        },
+        guardarNuevo: function guardarNuevo() {
+            var _this2 = this;
+
+            axios.post(this.rutas.guardarNuevo, {
+                serviciotipo_id: this.servicioSeleccionado,
+                marca_id: this.marca.id
+            }).then(function (response) {
+                console.log(response);
+                _this2.listar();
+            });
+        },
+        getTipoById: function getTipoById(id) {
+            var result = this.tiposServicios.find(function (elem) {
+                return elem.id == id;
+            });
+            if (result != undefined) return result.titulo;else return "No se encontró";
+        },
+        eliminarServicio: function eliminarServicio(id) {
+            var _this3 = this;
+
+            //console.log(id)
+            axios.get(this.rutas.eliminar + id).then(function (res) {
+                _this3.servicios = res.data;
+                //console.log(res.data)
+            });
         }
     },
     mounted: function mounted() {
-        var _this2 = this;
+        var _this4 = this;
 
         axios.get('/credenciales-tipos').then(function (res) {
-            _this2.credencialesTipos = res.data;
+            _this4.tiposCredenciales = res.data;
         });
 
         axios.get('/servicios-tipos').then(function (res) {
-            _this2.serviciosTipos = res.data;
+            _this4.tiposServicios = res.data;
         });
 
         axios.get('/servicios/' + this.marca.id).then(function (res) {
-            _this2.servicios = res.data;
+            _this4.servicios = res.data;
         });
     }
 });
@@ -48035,6 +48099,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "servicios-single",
@@ -48067,7 +48137,9 @@ var render = function() {
         { attrs: { id: "credencialesTipos" } },
         _vm._l(_vm.tiposServicios, function(elem, index) {
           return _c("option", { key: index, attrs: { value: "volvo" } }, [
-            _vm._v(_vm._s(_vm.item.titulo))
+            _vm._v(
+              "\n                " + _vm._s(_vm.item.titulo) + "\n            "
+            )
           ])
         })
       )
@@ -48103,7 +48175,97 @@ var render = function() {
               on: { click: _vm.agregarServicio }
             },
             [_vm._v("Agregar Servicio")]
-          )
+          ),
+          _vm._v(" "),
+          _vm.creating
+            ? _c("div", [
+                _c("br"),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _vm._v(
+                      "\n                            Formulario de creación\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.servicioSeleccionado,
+                            expression: "servicioSeleccionado"
+                          }
+                        ],
+                        attrs: {
+                          name: "servicios_tipos",
+                          id: "servicios_tipos"
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.servicioSeleccionado = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Selecciona...")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.tiposServicios, function(elem, index) {
+                          return _c(
+                            "option",
+                            { key: index, domProps: { value: elem.id } },
+                            [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(elem.titulo) +
+                                  "\n                                "
+                              )
+                            ]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        on: { click: _vm.guardarNuevo }
+                      },
+                      [_vm._v("Guardar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: { click: _vm.cancelarCreacion }
+                      },
+                      [_vm._v("Cancelar")]
+                    )
+                  ])
+                ])
+              ])
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
@@ -48114,8 +48276,36 @@ var render = function() {
           _vm.servicios.length == 0
             ? [_c("h1", [_vm._v("No hay ningún servicio creado aún")])]
             : [
-                _vm._v(
-                  "             \n                Hay algunos    \n            "
+                _c(
+                  "ul",
+                  _vm._l(_vm.servicios, function(elem, index) {
+                    return _c("li", { key: index }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(elem.id) +
+                          " - " +
+                          _vm._s(_vm.getTipoById(elem.serviciotipo_id)) +
+                          " \n                        "
+                      ),
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.eliminarServicio(elem.id)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Eliminar\n                        "
+                          )
+                        ]
+                      )
+                    ])
+                  })
                 )
               ]
         ],

@@ -14,18 +14,30 @@ class ServiciosController extends Controller
 {
     public function create(Request $rq)
     {
-        if(Auth::user()->isAn("Ejecutivo"))
+        if(Auth::user()->isAn("ejecutivo"))
         {
-            $servicio = Servicio::create([
-                'serviciotipo_id'=>$rq->serviciotipo_id,
-                'marca_id'=>$rq->marca_id
-            ]);
-            return $servicio;
+            $servicio = Servicio::where([
+                ['marca_id', '=', $rq->marca_id],
+                ['serviciotipo_id', '=', $rq->serviciotipo_id]
+            ])->get();
+
+            if($servicio->count() == 0)
+            {
+                $new = Servicio::create([
+                    'serviciotipo_id'=>$rq->serviciotipo_id,
+                    'marca_id'=>$rq->marca_id
+                ]);
+                return $new;
+            }
+            else
+            {
+                return ["This type of service have beed created already"];
+            }
         }
     }
     public function retrieve($marca_id, $serviciotipo_id = null)
     {
-        if(Auth::user()->isAn("Ejecutivo"))
+        if(Auth::user()->isAn("ejecutivo"))
         {
             $marca = Marca::find($marca_id);
             if($marca->user->id == Auth::user()->id)
@@ -42,8 +54,8 @@ class ServiciosController extends Controller
                 }
                 else
                 {
-                    $servicio = $marca->servicios;
-                    return $servicio;
+                    $servicios = $marca->servicios;
+                    return $servicios;
                 }                
             }
         } 
@@ -52,6 +64,7 @@ class ServiciosController extends Controller
     {
         $servicio = Servicio::find($servicio_id);
         $marca = $servicio->marca;
+        //return $servicio_id;
         if( $servicio->marca->user->id == Auth::user()->id )
         {
             Servicio::destroy($servicio->id);

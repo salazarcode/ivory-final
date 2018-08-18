@@ -2,7 +2,13 @@
 <div>
     <div class="card">
         <select id="credencialesTipos">
-            <option v-for="(elem, index) in tiposServicios" :key="index" value="volvo">{{item.titulo}}</option>
+            <option 
+                v-for="(elem, index) in tiposServicios" 
+                :key="index" 
+                value="volvo"
+            >
+                {{item.titulo}}
+            </option>
         </select>
     </div>    
 </div>

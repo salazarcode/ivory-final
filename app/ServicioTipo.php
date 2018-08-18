@@ -8,5 +8,5 @@ class ServicioTipo extends Model
 {
     protected $fillable = [
         'titulo'
-    ];
+    ];    
 }

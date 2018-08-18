@@ -44,8 +44,8 @@ Route::post('/marcas/{id}', 'MarcasController@update');
 Route::get('/marcas/destroy/{id}', 'MarcasController@delete');
 
 //Servicios
-Route::get('/servicios/{marca_id}/{serviciotipo_id?}', 'ServiciosController@retrieve');
 Route::post('/servicios', 'ServiciosController@create');
 Route::get('/servicios/destroy/{servicio_id}', 'ServiciosController@delete');
+Route::get('/servicios/{marca_id}/{serviciotipo_id?}', 'ServiciosController@retrieve');
 
 

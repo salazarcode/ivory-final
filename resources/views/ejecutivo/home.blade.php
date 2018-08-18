@@ -14,10 +14,10 @@
                         </div>
                     @endif
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <marcas></marcas>
                         </div>
-                        <div class="col-md-8">      
+                        <div class="col-md-9">      
                             <marcas-resume></marcas-resume>
                         </div>
                     </div>
