@@ -9,4 +9,5 @@ class CredencialTipo extends Model
     protected $fillable = [
         'titulo'
     ];
+    
 }

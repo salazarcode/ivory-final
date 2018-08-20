@@ -35,12 +35,11 @@
                 </template>
                 <template v-else>             
                     <ul>
-                        <li v-for="(elem, index) in servicios" :key="index">
-                            {{elem.id}} - {{getTipoById(elem.serviciotipo_id)}} 
-                            <a href="#" @click.prevent="eliminarServicio(elem.id)">
-                                Eliminar
-                            </a>
-                        </li>
+                        <servicios-single
+                            v-for="(elem, index) in servicios"
+                            :key="index"
+                            :servicio="elem"
+                        />
                     </ul>   
                 </template>
             </div>
@@ -67,8 +66,6 @@
                     eliminar: "/servicios/destroy/"
                 },
                 servicios: '',
-                tiposServicios: '',
-                tiposCredenciales: '',
                 creating: false,
                 servicioSeleccionado: ''
             }
@@ -95,8 +92,8 @@
                     marca_id: this.marca.id
                 })
                 .then((response)=> {
-                    console.log(response)
-                    this.listar()
+                    this.listar();
+                    this.cancelarCreacion();
                 });
             },
             getTipoById: function(id){
@@ -107,30 +104,39 @@
                     return "No se encontró"
             },
             eliminarServicio: function(id){
-                //console.log(id)
                 axios.get(this.rutas.eliminar + id)
                 .then((res) => {
                     this.servicios = res.data;
-                    //console.log(res.data)
-
                 })
             }
         },
         mounted(){
             axios.get('/credenciales-tipos')
             .then((res) => {
-                this.tiposCredenciales = res.data;
+                this.$store.commit("setTiposCredenciales", {
+                    'tiposCredenciales': res.data
+                });
             });
             
             axios.get('/servicios-tipos')
             .then((res) => {
-                this.tiposServicios = res.data;
+                this.$store.commit("setTiposServicios", {
+                    'tiposServicios': res.data
+                });
             });
 
             axios.get('/servicios/'+this.marca.id)
             .then((res) => {
                 this.servicios = res.data;
             });
+        },
+        computed: {           
+            tiposCredenciales: function(){
+                return this.$store.state.tiposCredenciales
+            },   
+            tiposServicios: function(){
+                return this.$store.state.tiposServicios
+            }
         }
 
     }

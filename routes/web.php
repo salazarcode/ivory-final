@@ -48,4 +48,6 @@ Route::post('/servicios', 'ServiciosController@create');
 Route::get('/servicios/destroy/{servicio_id}', 'ServiciosController@delete');
 Route::get('/servicios/{marca_id}/{serviciotipo_id?}', 'ServiciosController@retrieve');
 
-
+//Credenciales
+Route::post('/credenciales', 'ServiciosController@save');
+Route::get('/credenciales/{serviciotipo_id}/{credencialtipo_id}', 'ServiciosController@retrieve');

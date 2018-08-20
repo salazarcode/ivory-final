@@ -31,7 +31,7 @@ class ServiciosController extends Controller
             }
             else
             {
-                return ["This type of service have beed created already"];
+                return ["This type of service has already been created"];
             }
         }
     }

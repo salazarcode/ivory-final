@@ -3,11 +3,12 @@
     <div class="card">
         <div class="list" v-if="!isEditable">
             <div class="card-body">
-                <h3>{{marca.id}} - {{marca.titulo}}</h3>
+                <a href="#" @click.prevent="configurar">
+                    <h3>{{marca.id}} - {{marca.titulo}}</h3>
+                </a>
             </div>
             <div class="card-footer">
                 <a href="#" @click.prevent="editar">Editar</a>
-                <a href="#" @click.prevent="configurar">Configurar</a>
                 <a href="#" @click.prevent="eliminar">Eliminar</a>
             </div>
         </div>
@@ -21,7 +22,8 @@
                 <button class="btn btn-danger" @click="cancelar">Calcelar</button>
             </div>
         </div>
-    </div>    
+    </div>   
+    <br> 
 </div>
 </template>
 

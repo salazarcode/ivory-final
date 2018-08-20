@@ -13,4 +13,8 @@ class Credencial extends Model
     {
         return $this->belongsTo('App\Servicio');
     }
+    public function tipo()
+    {
+        return $this->belongsTo('App\CredencialTipo');
+    }
 }
