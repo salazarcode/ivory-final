@@ -37,17 +37,18 @@ Route::post('/credenciales-tipos', 'CredencialesTiposController@create');
 Route::post('/credenciales-tipos/{id}', 'CredencialesTiposController@update');
 Route::get('/credenciales-tipos/destroy/{id}', 'CredencialesTiposController@delete');
 
-//Marcas
-Route::get('/marcas/{id?}', 'MarcasController@retrieve');
-Route::post('/marcas', 'MarcasController@create');
-Route::post('/marcas/{id}', 'MarcasController@update');
-Route::get('/marcas/destroy/{id}', 'MarcasController@delete');
+//Credenciales
+Route::post('/credenciales', 'CredencialesController@save');
+Route::get('/credenciales/{servicio_id}/{credencialtipo_id}', 'CredencialesController@retrieve');
 
 //Servicios
 Route::post('/servicios', 'ServiciosController@create');
 Route::get('/servicios/destroy/{servicio_id}', 'ServiciosController@delete');
 Route::get('/servicios/{marca_id}/{serviciotipo_id?}', 'ServiciosController@retrieve');
 
-//Credenciales
-Route::post('/credenciales', 'ServiciosController@save');
-Route::get('/credenciales/{serviciotipo_id}/{credencialtipo_id}', 'ServiciosController@retrieve');
+//Marcas
+Route::post('/marcas', 'MarcasController@create');
+Route::get('/marcas/{id?}', 'MarcasController@retrieve');
+Route::post('/marcas/{id}', 'MarcasController@update');
+Route::get('/marcas/destroy/{id}', 'MarcasController@delete');
+

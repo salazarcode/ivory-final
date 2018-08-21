@@ -19,7 +19,7 @@
                         v-for="(elem, index) in tiposCredenciales" 
                         :key="index"
                         :servicio="servicio"
-                        :tipo="elem"
+                        :tipoCredencial="elem"
                     />
                 </div>       
                 <div class="card-footer">

@@ -14,66 +14,65 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CredencialesController extends Controller
 {
-    public function retrieve($serviciotipo_id, $credencialtipo_id)
+    public function retrieve($servicio_id, $credencialtipo_id)
     {
-        $serviciotipo = ServicioTipo::find($serviciotipo_id);
-        $credencialtipo = CredencialTipo::find($credencialtipo_id);
-        
-        if(($serviciotipo instanceof ModelNotFoundException) || ($credencialtipo instanceof ModelNotFoundException))
+        try
+        {
+            $servicio = Servicio::findOrFail($servicio_id);
+            $credencialtipo = CredencialTipo::findOrFail($credencialtipo_id);
+        }
+        catch(ModelNotFoundException $e)
         {
             return [
                 "codigo"=> 99,
                 "descripcion"=> "Tipo de credencial o tipo de servicio incorrectos"
             ];
-        }     
-        else
+        }
+
+        try
         {
             $credencial = Credencial::where([
-                ['serviciotipo_id', '=', $serviciotipo->id],
+                ['servicio_id', '=', $servicio->id],
                 ['credencialtipo_id', '=', $credencialtipo->id]
             ])->firstOrFail();
-            if($credencial instanceof ModelNotFoundException)
-            {
-                return [
-                    "codigo"=> 99,
-                    "descripcion"=> "Credencial no definida"
-                ];
-            }
-            else
-            {
-                return $credencial;
-            }            
-        }       
+            return $credencial;
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return [
+                "codigo"=> 99,
+                "descripcion"=> "Credencial no definida"
+            ];
+        }    
     }
     public function save(Request $rq)
     {
-        $serviciotipo = ServicioTipo::find($rq->serviciotipo_id);
-        $credencialtipo = CredencialTipo::find($rq->credencialtipo_id);
-        
-        if(($serviciotipo instanceof ModelNotFoundException) || ($credencialtipo instanceof ModelNotFoundException))
+        try
+        {
+            if($rq->has('id'))
+            {
+                $credencial = Credencial::where('id', $rq->id)->firstOrFail();
+                $credencial->valor = $rq->valor;   
+                $credencial->save();
+            }
+            else
+            {
+                $servicio = Servicio::findOrFail($rq->servicio_id);
+                $credencialtipo = CredencialTipo::findOrFail($rq->credencialtipo_id);
+                $credencial = new Credencial;
+                $credencial->servicio_id = $servicio->id;
+                $credencial->credencialtipo_id = $credencialtipo->id;
+                $credencial->valor = $rq->valor;   
+                $credencial->save();
+            }
+            return $credencial;                    
+        }
+        catch(ModelNotFoundException $e)
         {
             return [
                 "codigo"=> 99,
                 "descripcion"=> "Tipo de credencial o tipo de servicio incorrectos"
             ];
-        }     
-        else
-        {        
-            if($rq->has('id'))
-            {
-                $credencial = Credencial::where('id', $rq->id)->first();
-                $credencial->value = $rq->value;   
-                $credencial->save();
-            }
-            else
-            {
-                $credencial = new Credencial;
-                $credencial->servicio()->save($serviciotipo);
-                $credencial->tipo()->save($credencialtipo);
-                $credencial->value = $rq->value;   
-                $credencial->save();
-            }                    
-            return $credencial;
-        } 
+        }
     }
 }

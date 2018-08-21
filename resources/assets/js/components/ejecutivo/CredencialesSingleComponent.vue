@@ -3,13 +3,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    {{tipo.titulo}}
+                    {{tipoCredencial.titulo}}
                 </div>
                 <div class="col-md-8">
                     <input type="text" 
                     class="form-control" 
-                    :placeholder="tipo.titulo" 
-                    v-model="value"
+                    :placeholder="tipoCredencial.titulo" 
+                    v-model="credencial.valor"
                     @blur="guardar"
                 >
                 </div>
@@ -24,21 +24,48 @@
         name: "credenciales-single",
         props: {
             servicio: Object,
-            tipo: Object
+            tipoCredencial: Object
         },
         data(){
             return {
-                value: ''
+                credencial: {valor: ''},
+                rutas: {
+                    retrieve: "/credenciales/",
+                    guardar: '/credenciales'
+                }
             }
         },
         methods: {
-            guardar: function(){
-                
+            guardar: function(){     
+                if(this.credencial.hasOwnProperty("id"))
+                {
+                    axios.post(this.rutas.guardar, {
+                        id: this.credencial.id,
+                        valor: this.credencial.valor
+                    })
+                    .then((res)=> {
+                        this.credencial = res.data
+                    });
+                }
+                else
+                {
+                    axios.post(this.rutas.guardar, {
+                        servicio_id: this.servicio.id,
+                        credencialtipo_id: this.tipoCredencial.id,
+                        valor: this.credencial.valor
+                    })
+                    .then((res)=> {
+                        this.credencial = res.data
+                    });
+                    
+                }
             }
         },
-        computed: {
-        },
-        computed: {
+        created(){
+            axios.get(this.rutas.retrieve + this.servicio.id + '/' + this.tipoCredencial.id)
+            .then((res) => {
+                this.credencial = res.data
+            })
         }
     }
 </script>
